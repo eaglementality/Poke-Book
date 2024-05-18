@@ -3,7 +3,7 @@ import { useColourStore } from "../ZustansStore/store";
 export const SearchBar = () => {
   const theme = useColourStore((state: any) => state.colorTheme.colour_holder);
   return (
-    <main className="w-full mt-10">
+    <main className="w-full -mt-24 grid justify-center">
       <div className={`laptop:w-[536px] tablet:w-[536px] mobile:w-full p-2 border  rounded-r-full rounded-l-full bg-`}>
         <div className="w-full border bg-[url('./assets/BackImage.png/')] bg-white flex  rounded-r-full rounded-l-full shadow-lg">
           <input type="search" className="w-full p-2 pl-4   rounded-r-full  text-neutral-500 rounded-l-full bg-[url('./assets/BackImage.png/')]  mobile:text-lg laptop:text-2xl tablet:text-2xl" placeholder="Enter pokemon name"/>
@@ -26,6 +26,7 @@ export const SearchBar = () => {
           </span>
         </div>
       </div>
+      <a href={'#'} className="mt-4">View all</a>
     </main>
   );
 };

@@ -6,7 +6,7 @@ function App() {
   return (
     <main
       className={
-        "bg-[url('./assets/BackImage.png/')] w-screen h-screen grid  justify-center items-center text-center mobile:p-2"
+        "bg-[url('./assets/BackImage.png/')] w-screen h-screen grid grid-col-1   items-center text-center mobile:p-2"
       }
     >
       <div className="grid grid-col-1 text-center place-items-center  mobile:p-2">
@@ -35,7 +35,7 @@ function App() {
         </p>
       </div>
         <SearchBar />
-        <a href={'#'} className="mt-2">View all</a>
+        {/* <a href={'#'} className="mt-2">View all</a> */}
     </main>
   );
 }
