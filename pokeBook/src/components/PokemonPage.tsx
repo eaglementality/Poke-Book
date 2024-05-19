@@ -2,7 +2,7 @@ import logo from "../assets/PokemonLogoSmall.png";
 import backgroundImage from "../assets/BackImage.png";
 import { SearchBar_2 } from "../widget/SearchBar2";
 import { useNavigate } from "react-router-dom";
-import { useColourStore } from "../ZustansStore/store";
+import { useColourStore, useGetAllPokeMonData } from "../ZustansStore/store";
 import { PokemonCard } from "../widget/PokemonCard";
 import { ConfigProvider, Modal, Pagination } from "antd";
 import { useState } from "react";
@@ -10,6 +10,9 @@ import { Pagination_UI } from "../widget/Pagination";
 
 export function Pokemon_lib() {
   const theme = useColourStore((state: any) => state.colorTheme.colour_holder);
+  const PokemonData = useGetAllPokeMonData((state: any) => state.PokeMonData);
+  
+
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [themeBorder, setThemeBorder] = useState({
@@ -17,7 +20,6 @@ export function Pokemon_lib() {
     blue_Border: false,
     yellow_Border: false,
   });
-
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalItems, setTotalItems] = useState(100); // Example total number of items
@@ -32,7 +34,6 @@ export function Pokemon_lib() {
     setPageSize(size);
     setCurrentPage(1); // Reset to first page when page size changes
   };
-
   const modalStyles = {
     header: {
       borderLeft: ``,
@@ -57,6 +58,7 @@ export function Pokemon_lib() {
       padding: "0px",
     },
   };
+ console.log(PokemonData);
   return (
     <>
       <ConfigProvider
@@ -234,7 +236,7 @@ export function Pokemon_lib() {
         </nav>
         <section className="w-full grid grid-flow-col justify-center  item-center">
           <div className="grid grid-cols-4 justify-center gap-4 pt-[76px] ">
-            <PokemonCard />
+           {PokemonData.map(({sprites,types,name}:any) => <PokemonCard image={sprites?.other.showdown?.front_default} types={types} name={name}/>)}
           </div>
         </section>
         <footer className="w-full fixed bottom-5 flex justify-center items-center">
