@@ -35,6 +35,6 @@ export const useColourStore = create<ColourState>((set) => ({
 export const useGetAllPokeMonData = create((set)=>({
   PokeMonData:[],
   // GetPokeMonData:(PokeData:any)=>(set((state:any)=>({PokeMonData: [...state.PokeMonData, ...PokeData]})))
-  GetPokeMonData:(PokeData:any)=>(set((state:any)=>({PokeMonData: [ ...PokeData]})))
+  GetPokeMonData:(PokeData:any)=>(set(()=>({PokeMonData: [ ...PokeData]})))
 }))
 

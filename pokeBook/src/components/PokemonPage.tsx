@@ -4,7 +4,7 @@ import { SearchBar_2 } from "../widget/SearchBar2";
 import { useNavigate } from "react-router-dom";
 import { useColourStore, useGetAllPokeMonData } from "../ZustansStore/store";
 import { PokemonCard } from "../widget/PokemonCard";
-import { ConfigProvider, Modal, Pagination } from "antd";
+import { ConfigProvider, Modal} from "antd";
 import { useState } from "react";
 import { Pagination_UI } from "../widget/Pagination";
 
@@ -22,9 +22,9 @@ export function Pokemon_lib() {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [totalItems, setTotalItems] = useState(100); // Example total number of items
+  // const [totalItems, setTotalItems] = useState(100); // Example total number of items
 
-  const totalPages = Math.ceil(totalItems / pageSize);
+  const totalPages = Math.ceil(100 / pageSize);
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page);

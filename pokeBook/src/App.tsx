@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { LandingPage } from "./components/LandingPage";
 import { Pokemon_lib } from "./components/PokemonPage";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import axios from "axios";
 import { useGetAllPokeMonData } from "./ZustansStore/store";
 
