@@ -2,11 +2,12 @@ import { create } from "zustand";
 
 const ColourOps = {
   colours: {
-    pink: `#E85382`||`pink-500`,
-    blue: `#39BADF`||`sky-400`,
-    yellow: `#E1A725`||`yellow-500`,
+    pink: `#E85382` ,
+    blue: `#39BADF` ,
+    yellow: `#E1A725`,
   },
-  colour_holder: `#E85382`||`pink-500`,
+
+  colour_holder: `#E85382`,
 };
 
 type ColourOpsType = typeof ColourOps;
@@ -29,3 +30,11 @@ export const useColourStore = create<ColourState>((set) => ({
       };
     }),
 }));
+
+
+export const useGetAllPokeMonData = create((set)=>({
+  PokeMonData:[],
+  // GetPokeMonData:(PokeData:any)=>(set((state:any)=>({PokeMonData: [...state.PokeMonData, ...PokeData]})))
+  GetPokeMonData:(PokeData:any)=>(set(()=>({PokeMonData: [ ...PokeData]})))
+}))
+

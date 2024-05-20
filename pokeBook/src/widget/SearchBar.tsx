@@ -1,14 +1,19 @@
 import { useColourStore } from "../ZustansStore/store";
+import { useNavigate } from "react-router-dom";
 
 export const SearchBar = () => {
   const theme = useColourStore((state: any) => state.colorTheme.colour_holder);
+  const navigate = useNavigate();
+  console.log(theme)
   return (
-    <main className="w-full mt-10">
-      <div className={`laptop:w-[536px] tablet:w-[536px] mobile:w-full p-2 border  rounded-r-full rounded-l-full bg-`}>
+    <main className="w-full -mt-24 grid justify-center">
+      <div className={`laptop:w-[536px] tablet:w-[536px] mobile_L:w-[386px]  mobile_M:w-[356px] mobile_S:w-full p-2 border rounded-r-full rounded-l-full bg-`}style={{backgroundColor:`${theme}`}}>
         <div className="w-full border bg-[url('./assets/BackImage.png/')] bg-white flex  rounded-r-full rounded-l-full shadow-lg">
-          <input type="search" className="w-full p-2 pl-4   rounded-r-full  text-neutral-500 rounded-l-full bg-[url('./assets/BackImage.png/')]  mobile:text-lg laptop:text-2xl tablet:text-2xl" placeholder="Enter pokemon name"/>
+          <input type="search" className="w-full p-2 pl-4 font-sans  rounded-r-full  text-neutral-500 rounded-l-full bg-[url('./assets/BackImage.png/')]  mobile_S:text-lg laptop:text-2xl tablet:text-2xl" placeholder="Enter pokemon name"/>
           <span
-            className={`my-2 mx-2 bg-${theme} p-2 border rounded-full shadow-lg`}
+            className={`my-2 mx-2 p-2 border rounded-full shadow-lg cursor-pointer`}
+            style={{backgroundColor:`${theme}`}}
+            onClick={()=>{navigate('/ListView')}}
           >
             <svg
               width="20"
@@ -26,6 +31,7 @@ export const SearchBar = () => {
           </span>
         </div>
       </div>
+      <span onClick={()=>{navigate('/ListView')}} className="mt-4 underline cursor-pointer">View all</span>
     </main>
   );
 };
