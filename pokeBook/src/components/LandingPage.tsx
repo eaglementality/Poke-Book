@@ -7,7 +7,7 @@ export function LandingPage() {
   return (
     <main
       className={
-        "bg-[url('./assets/BackImage.png/')] w-screen h-screen grid grid-col-1   items-center text-center mobile_S:p-2"
+        "w-full h-full grid grid-col-1   items-center text-center mobile_S:p-2"
       }
     >
       <div className="grid grid-col-1 text-center place-items-center  mobile_S:p-2">

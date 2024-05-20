@@ -1,199 +1,80 @@
 import logo from "../assets/PokemonLogoSmall.png";
-import backgroundImage from "../assets/BackImage.png";
 import { SearchBar_2 } from "../widget/SearchBar2";
 import { useNavigate } from "react-router-dom";
 import { useColourStore, useGetAllPokeMonData } from "../ZustansStore/store";
 import { PokemonCard } from "../widget/PokemonCard";
-import { ConfigProvider, Modal} from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pagination_UI } from "../widget/Pagination";
+import axios from "axios";
+import { ModalTemplate } from "../templates/ModalTemplate";
 
 export function Pokemon_lib() {
   const theme = useColourStore((state: any) => state.colorTheme.colour_holder);
-  const changeTheme = useColourStore((state:any)=> state.changeColour);
 
   const PokemonData = useGetAllPokeMonData((state: any) => state.PokeMonData);
-  
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [themeBorder, setThemeBorder] = useState({
-    pink_Border: false,
-    blue_Border: false,
-    yellow_Border: false,
-  });
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  // const [totalItems, setTotalItems] = useState(100); // Example total number of items
 
-  const totalPages = Math.ceil(100 / pageSize);
+  const GetPokeMonData = useGetAllPokeMonData(
+    (state: any) => state.GetPokeMonData
+  );
+  const defaultUrl = useGetAllPokeMonData((state: any) => state.default);
+
+  const GetNextUrl = useGetAllPokeMonData((state: any) => state.GetNext);
+  const GetPrevUrl = useGetAllPokeMonData((state: any) => state.GetPrev);
+
+  const refresh = useGetAllPokeMonData((state: any) => state.refresh);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState(8);
+
+  const [searchtext, setSearchtext] = useState("");
+  const getPokemonData = async (url: string) => {
+    try {
+      const response = await axios.get(url);
+      const pokemonList = response.data.results;
+      const pokemonData = pokemonList.map(({ url }: any) => axios.get(url));
+      const pokemonDataResponse = await Promise.all(pokemonData);
+      const poke = pokemonDataResponse.map((res) => res.data);
+
+      GetPokeMonData(poke);
+      GetNextUrl(response.data.next);
+      GetPrevUrl(response.data.prev);
+      setTotalPages(Math.ceil(response.data.count / pageSize)); // Update total pages
+    } catch (error) {
+      console.error("Error fetching Pokémon data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getPokemonData(defaultUrl);
+  }, [defaultUrl, pageSize, refresh]);
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
+    const offset = (page - 1) * pageSize;
+    getPokemonData(
+      `https://pokeapi.co/api/v2/pokemon?limit=${pageSize}&offset=${offset}`
+    );
   };
 
-  const handlePageSizeChange = (size: any) => {
+  const handlePageSizeChange = (size: number) => {
     setPageSize(size);
     setCurrentPage(1); // Reset to first page when page size changes
+    getPokemonData(`https://pokeapi.co/api/v2/pokemon?limit=${size}&offset=0`);
   };
-  const modalStyles = {
-    header: {
-      borderLeft: ``,
-      borderRadius: 5,
-      paddingInlineStart: 0,
-      padding: "5px",
-    },
-    body: {
-      boxShadow: "border",
-      borderRadius: 5,
-      outerHeight: "70px",
-      outerWidth: "70px",
-    },
-    mask: {
-      backdropFilter: "blur(3px)",
-      backgroundImage: `URL(${backgroundImage})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-    },
-    content: {
-      padding: "0px",
-    },
-  };
- console.log(PokemonData);
+
   return (
     <>
-      <ConfigProvider
-        modal={{
-          styles: modalStyles,
-        }}
-      >
-        <Modal
-          title={`Choose Theme`}
-          open={isModalOpen}
-          centered
-          footer={null}
-          maskClosable={true}
-          closeIcon={null}
-          mask={true}
-          onCancel={() => setIsModalOpen(false)}
-          className="text-2xl font-mono text-center"
-          width={"427px"}
-        >
-          <div className="left-0 right-0  py-10 flex justify-center gap-2 bg-[url('./assets/BackImage.png/')] ">
-            {" "}
-            <svg
-              width="45"
-              height="45"
-              viewBox="0 0 45 45"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="mt-4 w-[15%] h-[15%] cursor-pointer"
-              onClick={() => {
-                setIsModalOpen(true);
-                setThemeBorder((prev) => ({
-                  ...prev,
-                  pink_Border: true,
-                  blue_Border: false,
-                  yellow_Border: false,
-                }));
-                changeTheme('pink')
-              }}
-            >
-              <rect
-                x="5.09424"
-                y="5.09433"
-                width="34.8113"
-                height="34.8113"
-                rx="17.4057"
-                fill={"#E85382"}
-              />
-              <rect
-                x="0.5"
-                y="0.5"
-                width="44"
-                height="44"
-                rx="22"
-                stroke={`${themeBorder.pink_Border && "#868686"}`}
-              />
-            </svg>{" "}
-            <svg
-              width="45"
-              height="45"
-              viewBox="0 0 45 45"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="mt-4 w-[15%] h-[15%] cursor-pointer"
-              onClick={() => {
-                setIsModalOpen(true);
-                setThemeBorder((prev) => ({
-                  ...prev,
-                  pink_Border: false,
-                  blue_Border: true,
-                  yellow_Border: false,
-                }));
-                changeTheme('blue')
-              }}
-            >
-              <rect
-                x="5.09424"
-                y="5.09433"
-                width="34.8113"
-                height="34.8113"
-                rx="17.4057"
-                fill={"#39BADF"}
-              />
-              <rect
-                x="0.5"
-                y="0.5"
-                width="44"
-                height="44"
-                rx="22"
-                stroke={`${themeBorder.blue_Border && "#868686"} `}
-              />
-            </svg>{" "}
-            <svg
-              width="45"
-              height="45"
-              viewBox="0 0 45 45"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="mt-4 w-[15%] h-[15%] cursor-pointer"
-              onClick={() => {
-                setIsModalOpen(true);
-                setThemeBorder((prev) => ({
-                  ...prev,
-                  pink_Border: false,
-                  blue_Border: false,
-                  yellow_Border: true,
-                }));
-                changeTheme('yellow')
-              }}
-            >
-              <rect
-                x="5.09424"
-                y="5.09433"
-                width="34.8113"
-                height="34.8113"
-                rx="17.4057"
-                fill={`#E1A725`}
-              />
-              <rect
-                x="0.5"
-                y="0.5"
-                width="44"
-                height="44"
-                rx="22"
-                stroke={`${themeBorder.yellow_Border && "#868686"} `}
-              />
-            </svg>
-          </div>
-        </Modal>
-      </ConfigProvider>
-      <main className="bg-[url('./assets/BackImage.png/')] w-screen h-screen">
-        <nav className=" w-full h-20 border shadow-lg">
+      <ModalTemplate
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
+      <main className="w-full h-full">
+        <nav className=" w-full h-20 border shadow-lg relative">
           <div className="ml-10 mr-12 flex justify-between ">
-            <div className="w-84 flex space-x-2  ">
+            <div className="w-84 flex space-x-2 ">
               <img
                 className="mt-3 laptop_L:w-full laptop:w-full mobile_S:w-20 mobile_M:w-20 mobile_L:w-20"
                 src={logo}
@@ -205,10 +86,10 @@ export function Pokemon_lib() {
                 className="font-sans font-bold text-2xl pt-6 pb-4 cursor-default laptop_L:block laptop:block mobile_S:hidden mobile_M:hidden  mobile_L:hidden"
               >
                 <span className="">{`Poke`}</span>
-                <span className="" style={{color:`${theme}`}}>{`book`}</span>
+                <span className="" style={{ color: `${theme}` }}>{`book`}</span>
               </div>
             </div>
-            <SearchBar_2 />
+            <SearchBar_2 text={searchtext} changeSearchText={setSearchtext} />
             <svg
               width="45"
               height="45"
@@ -239,20 +120,43 @@ export function Pokemon_lib() {
             </svg>
           </div>
         </nav>
-        <section className="w-full grid grid-flow-col justify-center  item-center">
-          <div className="grid grid-cols-4 justify-center gap-4 pt-[76px] ">
-           {PokemonData.map(({sprites,types,name,stats}:any) => <PokemonCard image={sprites?.other.showdown?.front_default} types={types} name={name} stat={stats}/> )}
+
+        <section className="w-full h-full p-[5%] overflow-y-auto">
+          <div className={` grid grid-cols-${4} px-6`}>
+            {PokemonData.map(
+              ({
+                sprites,
+                types,
+                name,
+                stats,
+                height,
+                weight,
+                abilities,
+              }: any) => (
+                <div className="">
+                  <PokemonCard
+                    image={sprites?.other.showdown?.front_default}
+                    types={types}
+                    name={name}
+                    stat={stats}
+                    height={height}
+                    weight={weight}
+                    abilities={abilities}
+                  />
+                </div>
+              )
+            )}
+          </div>
+          <div className="flex justify-center items-center mt-[5%] ">
+            <Pagination_UI
+              currentPage={currentPage}
+              totalPages={totalPages}
+              pageSize={pageSize}
+              onPageChange={handlePageChange}
+              onPageSizeChange={handlePageSizeChange}
+            />
           </div>
         </section>
-        <footer className="w-full fixed bottom-5 flex justify-center items-center">
-          <Pagination_UI
-            currentPage={currentPage}
-            totalPages={totalPages}
-            pageSize={pageSize}
-            onPageChange={handlePageChange}
-            onPageSizeChange={handlePageSizeChange}
-          />
-        </footer>
       </main>
     </>
   );
