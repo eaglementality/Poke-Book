@@ -10,6 +10,8 @@ import { Pagination_UI } from "../widget/Pagination";
 
 export function Pokemon_lib() {
   const theme = useColourStore((state: any) => state.colorTheme.colour_holder);
+  const changeTheme = useColourStore((state:any)=> state.changeColour);
+
   const PokemonData = useGetAllPokeMonData((state: any) => state.PokeMonData);
   
 
@@ -95,6 +97,7 @@ export function Pokemon_lib() {
                   blue_Border: false,
                   yellow_Border: false,
                 }));
+                changeTheme('pink')
               }}
             >
               <rect
@@ -129,6 +132,7 @@ export function Pokemon_lib() {
                   blue_Border: true,
                   yellow_Border: false,
                 }));
+                changeTheme('blue')
               }}
             >
               <rect
@@ -163,6 +167,7 @@ export function Pokemon_lib() {
                   blue_Border: false,
                   yellow_Border: true,
                 }));
+                changeTheme('yellow')
               }}
             >
               <rect
@@ -200,7 +205,7 @@ export function Pokemon_lib() {
                 className="font-sans font-bold text-2xl pt-6 pb-4 cursor-default laptop_L:block laptop:block mobile_S:hidden mobile_M:hidden  mobile_L:hidden"
               >
                 <span className="">{`Poke`}</span>
-                <span className="text-pink-400">{`book`}</span>
+                <span className="" style={{color:`${theme}`}}>{`book`}</span>
               </div>
             </div>
             <SearchBar_2 />
@@ -236,7 +241,7 @@ export function Pokemon_lib() {
         </nav>
         <section className="w-full grid grid-flow-col justify-center  item-center">
           <div className="grid grid-cols-4 justify-center gap-4 pt-[76px] ">
-           {PokemonData.map(({sprites,types,name}:any) => <PokemonCard image={sprites?.other.showdown?.front_default} types={types} name={name}/>)}
+           {PokemonData.map(({sprites,types,name,stats}:any) => <PokemonCard image={sprites?.other.showdown?.front_default} types={types} name={name} stat={stats}/> )}
           </div>
         </section>
         <footer className="w-full fixed bottom-5 flex justify-center items-center">
