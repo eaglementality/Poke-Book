@@ -122,7 +122,7 @@ export function Pokemon_lib() {
         </nav>
 
         <section className="w-full h-full p-[5%] overflow-y-auto">
-          <div className={` grid grid-cols-${4} px-6`}>
+          <div className={` grid grid-cols-4 px-6`}>
             {PokemonData.map(
               ({
                 sprites,
