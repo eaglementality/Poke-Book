@@ -83,10 +83,10 @@ export function Pokemon_lib() {
       />
       <main className="w-full h-full">
         <nav className=" w-full h-20 border shadow-lg relative">
-          <div className="ml-10 mr-12 flex justify-between ">
-            <div className="w-84 flex space-x-2 ">
+          <div className="ml-10 mr-12 flex justify-between mobile_S:ml-2 mobile_S:mr-4">
+            <div className="w-84 flex space-x-2 mobile_S:w-[65px] mobile_S:h-[60px]">
               <img
-                className="mt-3 laptop_L:w-full laptop:w-full mobile_S:w-20 mobile_M:w-20 mobile_L:w-20"
+                className="mt-3 laptop_L:w-full laptop:w-full mobile_S:w-full mobile_S:h-full mobile_S:mt-8"
                 src={logo}
               />
               <div
