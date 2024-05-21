@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Pagination_UI } from "../widget/Pagination";
 import axios from "axios";
 import { ModalTemplate } from "../templates/ModalTemplate";
+import { BeatLoader } from "react-spinners";
 
 export function Pokemon_lib() {
   const theme = useColourStore((state: any) => state.colorTheme.colour_holder);
@@ -30,8 +31,10 @@ export function Pokemon_lib() {
   const [pageSize, setPageSize] = useState(8);
 
   const [searchtext, setSearchtext] = useState("");
+  const [loading, setLoading] = useState(false);
   const getPokemonData = async (url: string) => {
     try {
+      setLoading(true);
       const response = await axios.get(url);
       const pokemonList = response.data.results;
       const pokemonData = pokemonList.map(({ url }: any) => axios.get(url));
@@ -44,11 +47,12 @@ export function Pokemon_lib() {
       setTotalPages(Math.ceil(response.data.count / pageSize)); // Update total pages
     } catch (error) {
       console.error("Error fetching Pokémon data:", error);
-    }
+    }0
   };
 
   useEffect(() => {
     getPokemonData(defaultUrl);
+    setLoading(false);
   }, [defaultUrl, pageSize, refresh]);
 
   const handlePageChange = (page: any) => {
@@ -64,7 +68,13 @@ export function Pokemon_lib() {
     setCurrentPage(1); // Reset to first page when page size changes
     getPokemonData(`https://pokeapi.co/api/v2/pokemon?limit=${size}&offset=0`);
   };
-
+  if (loading) {
+    return (
+      <div className="w-full h-full flex justify-center items-center p-5">
+        <BeatLoader color={theme} />
+      </div>
+    );
+  }
   return (
     <>
       <ModalTemplate
@@ -121,8 +131,8 @@ export function Pokemon_lib() {
           </div>
         </nav>
 
-        <section className="w-full h-full p-[5%] overflow-y-auto">
-          <div className={` grid grid-cols-${4} px-6`}>
+        <section className="w-full h-full p-[5%] mobile_S:p-[2%] mobile_M:p-[2%]  overflow-y-auto">
+          <div className={` grid px-6  mobile_S:grid-cols-1 mobile_S:px-2 tablet:grid-cols-2 laptop:grid-cols-3  laptop_L:grid-cols-4  mobile_M:px-2 mobile_M:grid-cols-1 `}>
             {PokemonData.map(
               ({
                 sprites,
@@ -147,7 +157,7 @@ export function Pokemon_lib() {
               )
             )}
           </div>
-          <div className="flex justify-center items-center mt-[5%] ">
+          <div className="flex justify-center items-center mt-[5%] px-[3%]">
             <Pagination_UI
               currentPage={currentPage}
               totalPages={totalPages}

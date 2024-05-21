@@ -25,9 +25,9 @@ export const Pagination_UI: React.FC<PaginationUIProps> = ({
   const SetPage = useGetAllPokeMonData((state: any) => state.SetPage);
   const nextUrl = useGetAllPokeMonData((state: any) => state.next);
   const prevUrl = useGetAllPokeMonData((state: any) => state.prev);
+
   const getPages = (currentPage: number, totalPages: number) => {
     const pages = [];
-
     if (totalPages <= 10) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -49,7 +49,6 @@ export const Pagination_UI: React.FC<PaginationUIProps> = ({
       }
       pages.push(totalPages);
     }
-
     return pages;
   };
   const pages_1 = getPages(currentPage, totalPages);
@@ -57,27 +56,27 @@ export const Pagination_UI: React.FC<PaginationUIProps> = ({
     <main className="w-full">
       <div className="w-full flex justify-between items-center ">
         <div>
-        <button
-          className="px-4 py-2 border rounded"
-          disabled={currentPage === 1}
-          onClick={() => {
-            if (onPageChange) onPageChange(currentPage - 1);
-            SetPrevUrl(prevUrl);
-          }}
-        >
-          <svg
-            width="10"
-            height="16"
-            viewBox="0 0 10 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+          <button
+            className="px-4 py-2 border rounded"
+            disabled={currentPage === 1}
+            onClick={() => {
+              if (onPageChange) onPageChange(currentPage - 1);
+              SetPrevUrl(prevUrl);
+            }}
           >
-            <path
-              d="M7.45616 14.825L1.13741 8.52505C1.06241 8.45005 1.00916 8.3688 0.977664 8.2813C0.946164 8.1938 0.930664 8.10005 0.931164 8.00005C0.931164 7.90005 0.946914 7.8063 0.978414 7.7188C1.00991 7.6313 1.06291 7.55005 1.13741 7.47505L7.45616 1.1563C7.63117 0.981299 7.84992 0.893799 8.11241 0.893799C8.37492 0.893799 8.59991 0.987549 8.78741 1.17505C8.97491 1.36255 9.06866 1.5813 9.06866 1.8313C9.06866 2.0813 8.97491 2.30005 8.78741 2.48755L3.27491 8.00005L8.78741 13.5125C8.96241 13.6875 9.04992 13.9033 9.04992 14.1598C9.04992 14.4163 8.95617 14.638 8.76866 14.825C8.58116 15.0125 8.36241 15.1063 8.11241 15.1063C7.86241 15.1063 7.64366 15.0125 7.45616 14.825Z"
-              fill="black"
-            />
-          </svg>
-        </button>
+            <svg
+              width="10"
+              height="16"
+              viewBox="0 0 10 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.45616 14.825L1.13741 8.52505C1.06241 8.45005 1.00916 8.3688 0.977664 8.2813C0.946164 8.1938 0.930664 8.10005 0.931164 8.00005C0.931164 7.90005 0.946914 7.8063 0.978414 7.7188C1.00991 7.6313 1.06291 7.55005 1.13741 7.47505L7.45616 1.1563C7.63117 0.981299 7.84992 0.893799 8.11241 0.893799C8.37492 0.893799 8.59991 0.987549 8.78741 1.17505C8.97491 1.36255 9.06866 1.5813 9.06866 1.8313C9.06866 2.0813 8.97491 2.30005 8.78741 2.48755L3.27491 8.00005L8.78741 13.5125C8.96241 13.6875 9.04992 13.9033 9.04992 14.1598C9.04992 14.4163 8.95617 14.638 8.76866 14.825C8.58116 15.0125 8.36241 15.1063 8.11241 15.1063C7.86241 15.1063 7.64366 15.0125 7.45616 14.825Z"
+                fill="black"
+              />
+            </svg>
+          </button>
           {pages_1.map((page) => (
             <Primitive.button
               key={page}
