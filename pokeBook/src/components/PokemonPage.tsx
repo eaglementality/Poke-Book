@@ -34,8 +34,15 @@ export function Pokemon_lib() {
   const [loading, setLoading] = useState(false);
   const getPokemonData = async (url: string) => {
     try {
-      setLoading(true);
       const response = await axios.get(url);
+      setLoading(true)
+      if (response.status === 200) {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      } else {
+        setLoading(false) 
+      }
       const pokemonList = response.data.results;
       const pokemonData = pokemonList.map(({ url }: any) => axios.get(url));
       const pokemonDataResponse = await Promise.all(pokemonData);
@@ -47,12 +54,12 @@ export function Pokemon_lib() {
       setTotalPages(Math.ceil(response.data.count / pageSize)); // Update total pages
     } catch (error) {
       console.error("Error fetching Pokémon data:", error);
-    }0
+    }
+    0;
   };
 
   useEffect(() => {
     getPokemonData(defaultUrl);
-    setLoading(false);
   }, [defaultUrl, pageSize, refresh]);
 
   const handlePageChange = (page: any) => {
@@ -81,12 +88,12 @@ export function Pokemon_lib() {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />
-      <main className="w-full h-full">
+      <main className="w-full h-full flex flex-col">
         <nav className=" w-full h-20 border shadow-lg relative">
-          <div className="ml-10 mr-12 flex justify-between mobile_S:ml-2 mobile_S:mr-4">
-            <div className="w-84 flex space-x-2 mobile_S:w-[65px] mobile_S:h-[60px]">
+          <div className="ml-10 mr-12 flex justify-between laptop:ml-10 laptop:mr-12 mobile_S:ml-2 mobile_S:mr-4">
+            <div className="w-84 flex space-x-1">
               <img
-                className="mt-3 laptop_L:w-full laptop:w-full mobile_S:w-full mobile_S:h-full mobile_S:mt-8"
+                className="mt-3"
                 src={logo}
               />
               <div
@@ -131,8 +138,10 @@ export function Pokemon_lib() {
           </div>
         </nav>
 
-        <section className="w-full h-full p-[5%] mobile_S:p-[2%] mobile_M:p-[2%]  overflow-y-auto">
-          <div className={` grid px-6  mobile_S:grid-cols-1 mobile_S:px-2 tablet:grid-cols-2 laptop:grid-cols-3  laptop_L:grid-cols-4  mobile_M:px-2 mobile_M:grid-cols-1 `}>
+        <section className="flex item-center justify-center w-full h-full p-[5%] mobile_S:p-[2%] mobile_M:p-[2%]  overflow-y-auto">
+          <div
+            className={`px-6 py-10 w-1/2 h-1/2 gap-x-20 grid mobile_S:grid-cols-1 mobile_S:px-2 tablet:grid-cols-2 laptop:grid-cols-3  laptop_L:grid-cols-4  mobile_M:px-2 mobile_M:grid-cols-1`}
+          >
             {PokemonData.map(
               ({
                 sprites,
@@ -157,16 +166,16 @@ export function Pokemon_lib() {
               )
             )}
           </div>
-          <div className="flex justify-center items-center mt-[5%] px-[3%]">
-            <Pagination_UI
-              currentPage={currentPage}
-              totalPages={totalPages}
-              pageSize={pageSize}
-              onPageChange={handlePageChange}
-              onPageSizeChange={handlePageSizeChange}
-            />
-          </div>
         </section>
+        <div className="flex justify-center items-center px-[3%] shadow-lg border-t p-2">
+          <Pagination_UI
+            currentPage={currentPage}
+            totalPages={totalPages}
+            pageSize={pageSize}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+          />
+        </div>
       </main>
     </>
   );

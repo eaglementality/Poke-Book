@@ -8,8 +8,8 @@ export function SearchBar_2({ text, changeSearchText }: prop) {
   const searchFilter = useGetAllPokeMonData((state: any) => state.searchFilter);
   const SetRefresh = useGetAllPokeMonData((state: any) => state.setRefresh);
   return (
-    <main className="w-[20%] mt-4 mobile_S:w-full laptop:w-[20%] tablet:w-[50%]">
-      <div className="flex w-full space-x-1 border rounded-l-full rounded-r-full shadow-lg mob">
+    <main className="w-[20%] mt-3 mobile_S:w-full laptop:w-[20%] tablet:w-[50%]">
+      <div className="flex w-full space-x-1 border rounded-l-full rounded-r-full shadow-lg">
         <svg
           width="24"
           height="24"
