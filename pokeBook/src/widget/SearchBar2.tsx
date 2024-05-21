@@ -8,7 +8,7 @@ export function SearchBar_2({ text, changeSearchText }: prop) {
   const searchFilter = useGetAllPokeMonData((state: any) => state.searchFilter);
   const SetRefresh = useGetAllPokeMonData((state: any) => state.setRefresh);
   return (
-    <main className="w-[20%] mt-4">
+    <main className="w-[20%] mt-3 mobile_S:w-full laptop:w-[20%] tablet:w-[50%]">
       <div className="flex w-full space-x-1 border rounded-l-full rounded-r-full shadow-lg">
         <svg
           width="24"
@@ -31,7 +31,7 @@ export function SearchBar_2({ text, changeSearchText }: prop) {
             changeSearchText(e.target.value);
             SetRefresh();
           }}
-          className="font-sans w-full h-12 bg-[url('./assets/BackImage.png/')] pl-5 rounded-r-full cursor-default"
+          className="font-sans w-full h-12 bg-[url('./assets/BackImage.png/')] pl-5 rounded-r-full cursor-default mobile_S:pl-0"
           type="text"
           placeholder="Enter pokemon name"
         />
