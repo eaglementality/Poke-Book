@@ -140,7 +140,7 @@ export function Pokemon_lib() {
 
         <section className="flex item-center justify-center w-full h-full p-[5%] mobile_S:p-[2%] mobile_M:p-[2%]  overflow-y-auto">
           <div
-            className={`px-6 py-10 w-1/2 h-1/2 gap-x-20 grid mobile_S:grid-cols-1 mobile_S:px-2 tablet:grid-cols-2 laptop:grid-cols-3  laptop_L:grid-cols-4  mobile_M:px-2 mobile_M:grid-cols-1`}
+            className={`px-6 py-10 w-2/3 h-1/2 gap-x-20 grid mobile_S:grid-cols-1 mobile_S:px-2 tablet:grid-cols-2 laptop:grid-cols-3  laptop_L:grid-cols-4  mobile_M:px-2 mobile_M:grid-cols-1`}
           >
             {PokemonData.map(
               ({

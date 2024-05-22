@@ -112,9 +112,9 @@ export function PokemonCard({
         </div>
       </main> */}
 
-      <article className="flex h-[20rem] w-64 flex-col border shadow-lg rounded-lg bg-white p-3 overflow-hidden hover:h-[28rem]  transition ease-in-out duration-500 scale-y-90">
+      <article className="flex h-[20rem] w-[20rem] flex-col border shadow-lg rounded-lg bg-white p-3 overflow-hidden hover:h-[28rem]  transition ease-in-out duration-500 scale-y-90">
         <span className="flex flex-col items-center py-2 flex-1">
-          <span className="flex px-10 py-10 rounded-lg bg-stone-200 w-full">
+          <span className="flex px-10 py-10 justify-center rounded-lg bg-stone-200 w-full">
             <img
               className="relative -top-12 w-[110.9px] h-[110.9px]"
               src={image}
