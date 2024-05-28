@@ -95,6 +95,9 @@ export function Pokemon_lib() {
               <img
                 className="mt-3"
                 src={logo}
+                onClick={() => {
+                  navigate("/");
+                }}
               />
               <div
                 onClick={() => {

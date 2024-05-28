@@ -53,6 +53,7 @@ export const ModalTemplate = ({isModalOpen,setIsModalOpen}:prop) =>{
           onCancel={() => setIsModalOpen(false)}
           className="text-2xl font-mono text-center"
           width={"427px"}
+          
         >
           <div className="left-0 right-0  py-10 flex justify-center gap-2 bg-[url('./assets/BackImage.png/')] ">
             {" "}
