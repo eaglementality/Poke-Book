@@ -4,9 +4,11 @@ type prop = {
   text:string;
   changeSearchText: (e: any) => void;
 };
-export function SearchBar_2({ text, changeSearchText }: prop) {
-  const searchFilter = useGetAllPokeMonData((state: any) => state.searchFilter);
-  const SetRefresh = useGetAllPokeMonData((state: any) => state.setRefresh);
+export function SearchBar_2({ changeSearchText }: prop) {
+  // const searchFilter = useGetAllPokeMonData((state: any) => state.searchFilter);
+  // const SetRefresh = useGetAllPokeMonData((state: any) => state.setRefresh);
+  const PokemonData = useGetAllPokeMonData((state: any) => state.PokeMonData);
+  
   return (
     <main className="w-[20%] mt-3 mobile_S:w-full laptop:w-[20%] tablet:w-[50%]">
       <div className="flex w-full space-x-1 border rounded-l-full rounded-r-full shadow-lg">
@@ -18,7 +20,8 @@ export function SearchBar_2({ text, changeSearchText }: prop) {
           xmlns="http://www.w3.org/2000/svg"
           className="m-3 cursor-pointer"
           onClick={() => {
-            searchFilter(text);
+            // SetRefresh();
+            // searchFilter(text);
           }}
         >
           <path
@@ -29,7 +32,8 @@ export function SearchBar_2({ text, changeSearchText }: prop) {
         <input
           onChange={(e: any) => {
             changeSearchText(e.target.value);
-            SetRefresh();
+            console.log(PokemonData)
+            // SetRefresh();
           }}
           className="font-sans w-full h-12 bg-[url('./assets/BackImage.png/')] pl-5 rounded-r-full cursor-default mobile_S:pl-0"
           type="text"
