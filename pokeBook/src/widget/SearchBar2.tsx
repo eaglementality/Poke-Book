@@ -4,9 +4,9 @@ type prop = {
   text:string;
   changeSearchText: (e: any) => void;
 };
-export function SearchBar_2({ text, changeSearchText }: prop) {
-  const searchFilter = useGetAllPokeMonData((state: any) => state.searchFilter);
-  const SetRefresh = useGetAllPokeMonData((state: any) => state.setRefresh);
+export function SearchBar_2({ changeSearchText }: prop) {
+  // const searchFilter = useGetAllPokeMonData((state: any) => state.searchFilter);
+  // const SetRefresh = useGetAllPokeMonData((state: any) => state.setRefresh);
   const PokemonData = useGetAllPokeMonData((state: any) => state.PokeMonData);
   
   return (
